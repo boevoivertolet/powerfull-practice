@@ -1,8 +1,7 @@
-import React, {ChangeEvent, MouseEvent, useState} from 'react';
+import React, {useState} from 'react';
 import './styles/App.css'
 import PostList from "./components/PostList";
-import MyButton from "./UI/button/MyButton";
-import MyInput from "./UI/input/MyInput";
+import PostForm from "./components/PostForm";
 
 
 function App() {
@@ -12,36 +11,22 @@ function App() {
         {id: '3', title: 'JS3', body: 'Description'}
 
     ])
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
 
-    const addNewPost = (e: MouseEvent<HTMLElement>) => {
-        e.preventDefault()
-        const newPost: PostType = {
-            id: Date.now().toString(),
-            title,
-            body
-        }
+    const createPost = (newPost: PostType) => {
         setPosts([...posts, newPost])
-        setTitle('')
-        setBody('')
 
     }
-
+    const removePost = (post: PostType) => {
+        setPosts(posts.filter(p => p.id !== post.id))
+    }
     return (
         <div className = "App">
-            <form action = "">
-
-                <MyInput type = "text" placeholder = {'Post name'} value = {title}
-                         onChange = {(e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)} />
-                <MyInput type = "text" placeholder = {'Post description'} value = {body}
-                         onChange = {(e: ChangeEvent<HTMLInputElement>) => setBody(e.currentTarget.value)} />
-                <MyButton onClick = {addNewPost}> Create post </MyButton>
-            </form>
-            <PostList posts = {posts} title = {'Post List 1'} />
+            <PostForm create = {createPost} />
+            <PostList remove = {removePost} posts = {posts} title = {'Post List 1'} />
         </div>
     );
 }
+
 
 export type PostType = {
     id: string
