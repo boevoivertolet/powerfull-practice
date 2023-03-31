@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import c from "./Button.module.css"
 
 const MyButton: React.FC<MyButtonProps> = ({children, ...restProps}) => {
@@ -11,6 +11,7 @@ const MyButton: React.FC<MyButtonProps> = ({children, ...restProps}) => {
 type MyButtonProps = {
     children?: React.ReactNode
     disabled?: boolean
+    onClick: (e: MouseEvent<HTMLElement>) => void
 }
 
 export default MyButton;

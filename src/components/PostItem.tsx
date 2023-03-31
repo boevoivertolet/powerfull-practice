@@ -5,7 +5,7 @@ const PostItem: React.FC<PostItemProps> = (props) => {
     return (
         <div className = {'post'}>
             <div className = "post-content">
-                <strong>{post.id}. {post.title}</strong>
+                <strong>{restProps.number}. {post.title}</strong>
                 <div>{post.body}</div>
                 <div className = "post-btn">
                     <button>delete</button>
@@ -19,7 +19,9 @@ type PostItemProps = {
         id: string
         title: string
         body: string
+
     }
+    number: number
 }
 
 export default PostItem;
