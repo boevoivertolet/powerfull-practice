@@ -2,15 +2,25 @@ import React, {useState} from 'react';
 import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
+import MySelect from "./UI/select/MySelect";
 
 
 function App() {
     const [posts, setPosts] = useState<Array<PostType>>([
-        {id: '1', title: 'JS1', body: 'Description'},
-        {id: '2', title: 'JS2', body: 'Description'},
-        {id: '3', title: 'JS3', body: 'Description'}
+        {id: '1', title: 'xxx', body: 'xxx'},
+        {id: '2', title: 'qqq', body: 'bbb'},
+        {id: '3', title: 'bbb', body: 'ccc'}
 
     ])
+    const [selectedSort, setSelectedSort] = useState<string>('')
+
+    const sortPosts = (sort: SortType) => {
+        setSelectedSort(sort)
+        setPosts([...posts].sort((a, b) => {
+            return a[sort].localeCompare(b[sort]);
+
+        }))
+    }
 
     const createPost = (newPost: PostType) => {
         setPosts([...posts, newPost])
@@ -22,6 +32,13 @@ function App() {
     return (
         <div className = "App">
             <PostForm create = {createPost} />
+            <hr style = {{margin: '15px 0'}} />
+            <div>
+                <MySelect sortPosts = {sortPosts} value = {selectedSort}
+                          defaultValue = {'sorting by'} options = {[
+                    {value: 'title', name: 'name'},
+                    {value: 'body', name: 'description'}]} />
+            </div>
             {
                 posts.length
                     ? <PostList remove = {removePost} posts = {posts} title = {'Post List 1'} />
@@ -31,6 +48,8 @@ function App() {
     );
 }
 
+
+export type SortType = 'title' | 'body'
 
 export type PostType = {
     id: string
